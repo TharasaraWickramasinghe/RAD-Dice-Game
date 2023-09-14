@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll a Dice Game</title>
+</head>
+<body>
+    <style>
+        body{
+        height: 600px;
+        place-items: center;
+        display: grid;
+        }
+        .btn {
+            background-color: #72b619;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 30%;
+            opacity: 0.9;
+            text-align: center;
+            border-radius: 30px;
+        }
+        .label {
+            color: rgb(177, 38, 38);
+            padding: 8px;
+            font-family: Arial;
+
+            display: inline-block;
+             width: 100px;
+             height: 50px;
+           text-align: center;
+            border: 1px solid red;
+            
+        } 
+        .player {
+            color: rgb(122, 159, 20);
+            padding: 8px;
+            font-family: Arial;          
+        }
+
+        .one{background-color: #bc76af;
+              
+        }
+        .two{background-color: #3ca27d;}   
+        .dices{
+            background-color: hsla(63, 95%, 78%, 0.719);
+            margin: auto;
+            width: 100%;
+           border: 3px solid green;
+           padding: 10px;
+           display: block;
+           text-align: center;
+        }
+        .mrg{
+            text-align: center;
+        }
+        .win{
+            color: rgb(122, 159, 20);
+            padding: 8px;
+            font-family: Arial; 
+        }
+        .restart{
+            background-color: #b63e19;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+            text-align: center;
+            display: none;
+            border-radius: 30px;
+        }
+        .ptag {
+            color: rgb(8, 9, 6);
+            padding: 8px;
+            font-family: Arial;          
+        }
+
+
+    </style>
+
+
+    <div>
+        <div class="mrg">
+            <h2> <label for="name"> <span id = "name" class="player"></span></label> </h2><br><br>
+        </div>
+      <div class="dices" >
+        <img src="Dice_Images/dice_1.png" id ="imgidf" alt="Dice1" width="130" height="150">&emsp;&emsp;&emsp;&emsp;&emsp;
+        <img src="Dice_Images/dice_1.png" id ="imgids" alt="Dice2 in a jacket" width="130" height="150" ><br>
+       </div>
+
+       <div class="mrg">
+            <button class="btn" id="strt" onclick="roll()">Roll</button></div><br>
+            <label for="gameoverfirst" style="font-size: 30px" ><span id = "gameoverfirst" class="win"></span></label>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <label for="gameoversecond" style="font-size: 30px"><span id = "gameoversecond" class="win"></span></label><br><br>
+            <img src="player1.jpg" id ="imgidf" alt="Player one" width="150" height="150">
+            <label for="scoreone" style="font-size: 50px"> <span id = "scoreone" class="label one"></span></label> &emsp;&emsp;&emsp;&emsp;&emsp;
+            <label for="scoretwo" style="font-size: 50px"><span id = "scoretwo" class="label two"></span></label>
+            <img src="player2.png" id ="imgidf" alt="Player two" width="130" height="130"><br>
+      </div>
+       <p class="ptag"><b>Player 1&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; player 2</b></p>
+       <br>
+       <div class="mrg">
+           <button class="restart" id="restart" onclick="restart()">Restart</button></div><br>
+       </div>
+    </div>
+
+    <script>
+        let marksone=0
+        let markstwo=0
+        let over = 0
+        let count = 1;
+        document.getElementById("name").innerHTML= "1st Player's turn"
+        document.getElementById("scoreone").innerHTML= marksone
+        document.getElementById("scoretwo").innerHTML= markstwo
+        
+        function roll(){
+            if(over==0){
+            let randfirst = Math.floor(((Math.random()*10)%6)+1 )
+            let randsecond = Math.floor(((Math.random()*10)%6)+1 )
+    
+           document.getElementById('imgidf').setAttribute("src","Dice_Images/dice_"+randfirst+".png")
+           document.getElementById('imgids').setAttribute("src","Dice_Images/dice_"+randsecond+".png")
+
+           if((count%2)==1){
+                if(randfirst==randsecond){
+                    if(randfirst==1 && randsecond==1){
+                        marksone=0
+                        count = count+1
+                        document.getElementById("name").innerHTML= "2nd Player's turn"
+                    }
+                    else{
+                        if((marksone+randfirst+randsecond)<=100){
+                            marksone=marksone+randfirst+randsecond
+                        }else{
+                            document.getElementById("name").innerHTML= "2nd Player's turn"
+                            count = count+1
+                        }       
+                    }
+                }else{
+                    if((marksone+randfirst+randsecond)<=100){
+                        marksone=marksone+randfirst+randsecond
+                        count = count+1
+                    }else{
+                        count = count+1
+                    } 
+                    document.getElementById("name").innerHTML= "2nd Player's turn"
+                    
+                }
+                document.getElementById("scoreone").innerHTML= marksone
+                if(marksone==100){
+                    document.getElementById("name").innerHTML= "WINNER IS 1st PLAYER"
+                    document.getElementById("gameoverfirst").innerHTML= "WINNER 🏆"
+                    document.getElementById("restart").style.display= "block"
+                    over=1
+                }
+            }
+            else{
+                if(randfirst==randsecond){
+                    if(randfirst==1 && randsecond==1){
+                        markstwo=0
+                        count = count+1
+                        document.getElementById("name").innerHTML= "1st Player's turn"
+                    }
+                    else{
+                        if((markstwo+randfirst+randsecond)<=100){
+                            markstwo=markstwo+randfirst+randsecond
+                        }else{
+                            document.getElementById("name").innerHTML= "1st Player's turn"
+                            count = count+1
+                        } 
+                    }
+                }else{
+                    if((markstwo+randfirst+randsecond)<=100){
+                        markstwo=markstwo+randfirst+randsecond
+                        count = count+1
+                        
+                    }else{
+                        count = count+1
+                    }
+                    document.getElementById("name").innerHTML= "1st Player's turn" 
+                }
+                document.getElementById("scoretwo").innerHTML= markstwo
+                if(markstwo==100){
+                    document.getElementById("name").innerHTML= "WINNER IS 2nd PLAYER"
+                    document.getElementById("gameoversecond").innerHTML= "WINNER 🏆"
+                    document.getElementById("restart").style.display= "block"
+                    over=1
+                 }
+            }
+        }   
+        }
+        function restart(){
+            marksone=0
+            markstwo=0
+            over = 0
+            count = 1;
+            document.getElementById("restart").style.display= "none"
+            document.getElementById("gameoverfirst").innerHTML= " "
+            document.getElementById("gameoversecond").innerHTML= " "
+            document.getElementById("scoreone").innerHTML= marksone
+            document.getElementById("scoretwo").innerHTML= markstwo
+            document.getElementById("name").innerHTML= "1st Player's turn" 
+        }
+       
+    </script>
+</body>
+</html>
